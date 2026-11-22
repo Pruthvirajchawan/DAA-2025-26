@@ -1,0 +1,44 @@
+
+#include <iostream>
+#include <algorithm>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int n, a[10][10], p[10];
+    int minCost = 99999;
+
+    cout << "Enter number of cities: ";
+    cin >> n;
+
+    cout << "Enter cost matrix:\n";
+    for(int i=0;i<n;i++)
+        for(int j=0;j<n;j++)
+            cin >> a[i][j];
+
+    for(int i=1;i<n;i++)
+        p[i-1] = i;
+
+    clock_t start = clock();
+
+    do {
+        int cost = a[0][p[0]];
+
+        for(int i=0;i<n-2;i++)
+            cost += a[p[i]][p[i+1]];
+
+        cost += a[p[n-2]][0];
+
+        if(cost < minCost)
+            minCost = cost;
+
+    } while(next_permutation(p, p+n-1));
+
+    clock_t end = clock();
+
+    cout << "Minimum Travelling Cost = " << minCost;
+    cout << "\nExecution Time = "
+         << (double)(end-start)/CLOCKS_PER_SEC << " seconds";
+
+    return 0;
+}
