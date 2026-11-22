@@ -1,0 +1,42 @@
+
+#include <iostream>
+#include <ctime>
+using namespace std;
+
+int main() {
+    int n, a[10][10];
+
+    cout << "Enter number of vertices: ";
+    cin >> n;
+
+    cout << "Enter cost matrix (999 for no edge):\n";
+    for(int i = 0; i < n; i++)
+        for(int j = 0; j < n; j++)
+            cin >> a[i][j];
+
+    clock_t start = clock();
+
+    for(int k = 0; k < n; k++) {
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(a[i][k] + a[k][j] < a[i][j])
+                    a[i][j] = a[i][k] + a[k][j];
+            }
+        }
+    }
+
+    clock_t end = clock();
+
+    cout << "\nShortest Distance Matrix:\n";
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++)
+            cout << a[i][j] << " ";
+        cout << endl;
+    }
+
+    cout << "Execution Time: "
+         << (double)(end - start) / CLOCKS_PER_SEC
+         << " seconds";
+
+    return 0;
+}
